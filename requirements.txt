@@ -4,3 +4,4 @@ xgboost
 pandas
 requests
 bs4
+scikit-learn
