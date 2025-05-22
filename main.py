@@ -5,6 +5,7 @@ import xgboost as xgb
 import pandas as pd
 from bs4 import BeautifulSoup
 import os
+import re
 
 app = FastAPI()
 
@@ -46,27 +47,34 @@ def send_telegram_message(message: str):
     requests.post(url, data=payload)
 
 def fetch_unlock_schedule():
+    url = "https://tokenomist.ai/unlocks"
     headers = {"User-Agent": "Mozilla/5.0"}
-    response = requests.get(UNLOCK_URL, headers=headers)
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
-    rows = soup.select("table tbody tr")
 
+    rows = soup.select("table tbody tr")
     tokens = []
+
     for row in rows:
         cols = row.find_all("td")
-        if len(cols) < 5:
+        if len(cols) < 6:
             continue
-        try:
-            symbol = cols[1].text.strip()
-            date_str = cols[2].text.strip()
-            unlock_date = datetime.strptime(date_str, "%b %d, %Y")
-            if unlock_date <= datetime.today() + timedelta(days=7):
-                tokens.append({
-                    "symbol": symbol,
-                    "unlock_date": unlock_date.strftime("%Y-%m-%d")
-                })
-        except:
-            continue
+
+        symbol = cols[0].text.strip().split("\n")[0]
+        time_text = cols[5].text.strip()  # e.g. "0D 16H 43M 22S"
+
+        # D만 추출
+        days_match = re.search(r"(\d+)D", time_text)
+        days = int(days_match.group(1)) if days_match else 0
+
+        # 7일 이내만 추가
+        if days <= 7:
+            unlock_date = (datetime.today() + timedelta(days=days)).strftime("%Y-%m-%d")
+            tokens.append({
+                "symbol": symbol,
+                "unlock_date": unlock_date
+            })
+
     return tokens
 
 signals = []
