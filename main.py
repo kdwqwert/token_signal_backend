@@ -14,7 +14,7 @@ MODEL_PATH = "model/xgb_model.json"
 UNLOCK_URL = "https://token.unlocks.app/"
 
 model = xgb.XGBClassifier()
-model.load_model(MODEL_PATH)
+# model.load_model(MODEL_PATH)
 
 def extract_features(symbol: str) -> pd.DataFrame:
     return pd.DataFrame([{
