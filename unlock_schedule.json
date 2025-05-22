@@ -1,0 +1,34 @@
+[
+  {
+    "symbol": "MURA",
+    "unlock_date": "2025-05-22"
+  },
+  {
+    "symbol": "MOCA",
+    "unlock_date": "2025-05-22"
+  },
+  {
+    "symbol": "1INCH",
+    "unlock_date": "2025-05-22"
+  },
+  {
+    "symbol": "EIGEN",
+    "unlock_date": "2025-05-27"
+  },
+  {
+    "symbol": "IOTA",
+    "unlock_date": "2025-05-27"
+  },
+  {
+    "symbol": "FET",
+    "unlock_date": "2025-05-27"
+  },
+  {
+    "symbol": "TRIBL",
+    "unlock_date": "2025-05-28"
+  },
+  {
+    "symbol": "CELO",
+    "unlock_date": "2025-05-29"
+  }
+]
