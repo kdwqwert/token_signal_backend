@@ -43,13 +43,16 @@ def predict_signal(symbol: str) -> dict:
 
 # 텔레그램 메시지 발송 함수
 def send_telegram_message(message: str):
+    print(f"[텔레그램 전송 시도] → {message}")  # 로그 추가
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": message,
         "parse_mode": "Markdown"
     }
-    requests.post(url, data=payload)
+    response = requests.post(url, data=payload)  # response 정의 누락되어 있었음
+    print(f"[텔레그램 응답] {response.status_code} - {response.text}")  # 응답 확인
+
 
 # 수동 입력된 unlock 일정 불러오기
 def fetch_unlock_schedule():
