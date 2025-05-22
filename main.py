@@ -83,6 +83,11 @@ signals = []
 def get_signals():
     return signals
 
+@app.get("/api/debug-unlocks")
+def debug_unlocks():
+    tokens = fetch_unlock_schedule()
+    return tokens
+
 @app.post("/api/generate")
 def generate_signals():
     global signals
@@ -101,8 +106,3 @@ def generate_signals():
         send_telegram_message(msg)
     signals = results
     return {"status": "ok", "count": len(signals)}
-
-@app.get("/api/debug-unlocks")
-def debug_unlocks():
-    tokens = fetch_unlock_schedule()
-    return tokens
